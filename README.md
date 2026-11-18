@@ -85,6 +85,6 @@ the start of this README, with a short license section added.
 
 ## License
 
-The plugin is under the MIT license (`LICENSE`). Lua keeps its own MIT
-license, in `lua/vendor/lua-5.4.8/LICENSE`. `THIRD-PARTY.md` lists the
+The plugin is under the MIT license (`LICENSE`). Lua is under the MIT
+license too, in `lua/vendor/lua-5.4.8/LICENSE`. `THIRD-PARTY.md` lists the
 parts that came from elsewhere, and their licenses.
