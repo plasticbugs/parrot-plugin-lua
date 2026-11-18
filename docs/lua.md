@@ -1,8 +1,15 @@
 # Lua
 
 You can write programs for the cart in [Lua](https://www.lua.org), a small
-language that's easy to learn. The Lua plugin (`LUA.CVP`) has a text
-editor. Plug in a USB keyboard, type a script, and press Ctrl+R to run it.
+language that's easy to learn. There are two ways to use it.
+
+- **On the console.** The Lua plugin (`LUA.CVP`) has a text editor. Plug in
+  a USB keyboard, type a script, and press Ctrl+R to run it.
+- **On your computer, with the [starter kit](https://github.com/plasticbugs/parrot-plugin-template).** Write a script,
+  try it in the kit's simulator, and build it into a plugin with a name and
+  icon in the cart's menu.
+
+Both run the same code, and a script written one way works the other way.
 
 ## A first script
 
@@ -24,6 +31,17 @@ On the console, start Lua from the Plugins page. It lists the scripts on
 the card. Press Esc to leave the list and Ctrl+N for a new script, type
 this in, and press Ctrl+R (or 4 on the keypad). Lua asks for a name the
 first time and saves the script in the card's `/LUA` folder.
+
+On your computer, in the starter kit, save it as `first.lua` and run:
+
+```sh
+sim/lua.sh first.lua
+```
+
+That opens the script in the same editor, in a window. Press 4 to run it.
+Add `--run` to skip the editor and start the script at once. The simulator
+needs SDL3 and a C compiler ([`docs/simulator.md`](https://github.com/plasticbugs/parrot-plugin-template/blob/main/docs/simulator.md)
+in the kit).
 
 To put a script on the card yourself, copy it into `/LUA`. Then open it
 from the cart's menu like any other file.
@@ -272,7 +290,7 @@ calls in its own memory.
 ## Speed
 
 On the cart, Lua runs about 3 million simple steps a second, which is
-about 50,000 in each TV frame. Some figures:
+about 50,000 in each TV frame. Some figures from the kit's `lua/test/onarm.sh`:
 
 | | Time on the cart |
 |---|---|
@@ -322,3 +340,61 @@ on the console.
 | `sprites.lua` | twelve sprites bouncing around |
 | `colours.lua` | a pattern in all 15 colours, drawn a little at a time |
 | `snake.lua` | a small game with a score that's saved on the card |
+
+## A script as a plugin
+
+A Lua app can be a `.CVP` with a name and icon. The script is built into
+the plugin, so there's nothing else to copy to the card. It starts at once,
+with no editor. This takes the [starter kit](https://github.com/plasticbugs/parrot-plugin-template). In its
+`CMakeLists.txt`:
+
+```cmake
+cmake_minimum_required(VERSION 3.13)
+include(cmake/parrotcart.cmake)
+project(mygame C CXX ASM)
+parrotcart_init()
+
+add_executable(mygame)
+cvcart_features(mygame PSRAM CARD PADS)
+parrotcart_lua(mygame MAIN src/main.lua FILES src/enemy.lua src/level1.txt HOME /MYGAME)
+cvcart_plugin(mygame ID yourname.mygame NAME "My Game" VERSION 0.1.0 BY "Your Name"
+              HOME /MYGAME ICON src/icon.txt README README.md)
+```
+
+- `MAIN` is the script the plugin starts.
+- `FILES` are the rest. `require` and `file.read` find them by their path
+  from `MAIN`'s folder, so `src/enemy.lua` is `require("enemy")`.
+- `HOME` is the folder on the card for the app's saves. Give
+  `cvcart_plugin` the same one. The folder has to be on the card already.
+- `cvcart_features` always needs `PSRAM` and `CARD`. Add `PADS`,
+  `KEYBOARD`, `MOUSE` or `MIDI_IN` for the USB devices your script uses
+  ([`docs/features.md`](https://github.com/plasticbugs/parrot-plugin-template/blob/main/docs/features.md)). A function whose
+  feature is off stops the script with a message that says so. Each
+  feature you leave out gives Lua more fast memory.
+
+Build it the usual way ([`docs/getting-started.md`](https://github.com/plasticbugs/parrot-plugin-template/blob/main/docs/getting-started.md))
+and copy the `.CVP` into `/PLUGINS`. Say in your README's credits that the
+plugin contains Lua (MIT, <https://www.lua.org>).
+
+To try the app on your computer before you build it:
+
+```sh
+sim/lua.sh src --run
+```
+
+## Working on the runtime
+
+The runtime is in `lua/` here and in the kit. `lua/main.c` starts with a
+description of how it works. Its tests are in the kit:
+
+```sh
+cmake -S lua -B build-lua -G Ninja -DPICO_SDK_PATH=$HOME/pico-sdk
+ninja -C build-lua                  # build-lua/LUA.CVP
+lua/test/run.sh                     # the runtime on the console's model
+lua/test/onarm.sh                   # the cart's build on an emulated chip
+sim/test.sh lua                     # the editor and scripts in the simulator
+```
+
+`lua/test/onarm.sh` needs Python with `unicorn` and `pyelftools`. It runs
+the speed test above, checks that the deepest nesting fits the stack, and
+runs the API test on the cart's code.

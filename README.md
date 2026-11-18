@@ -57,6 +57,12 @@ Source: <https://github.com/plasticbugs/parrot-plugin-lua>
 | `colours.lua` | a pattern in all 15 colours, drawn a little at a time |
 | `snake.lua` | a small game with a score that's saved on the card |
 
+## On your computer
+
+With the [starter kit](https://github.com/plasticbugs/parrot-plugin-template) you can write and try scripts on your
+computer in a simulator, and build a script into a plugin with a name and
+icon in the cart's menu. The guide has the steps (`docs/lua.md`).
+
 ## Build it yourself
 
 You need the Raspberry Pi Pico SDK 2.1.1, an Arm GNU toolchain, CMake,
