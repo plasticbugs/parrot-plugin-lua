@@ -75,7 +75,7 @@ On Ubuntu, `tools/ci/setup.sh` installs the same tools that GitHub uses to
 build each release.
 
 `CART-README.md` is the text the cart shows on the plugin's page. It is
-the start of this README, with its own short license section.
+the start of this README, with a short license section added.
 
 ## License
 
