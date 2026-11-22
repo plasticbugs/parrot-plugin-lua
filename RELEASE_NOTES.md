@@ -1,0 +1,3 @@
+- Lua starts without a file too, so the cart's menu lists it in Apps. It opens with the list of scripts on the card.
+- The sound goes out to the console every 0.1 s as well as whenever a script changes it. The console misreads a byte from the cart now and then, and before this one bad byte could leave a note playing until RESET.
+- A USB pad, keyboard, mouse or MIDI keyboard on a powered hub is found when it was plugged in before Lua started, and when it's plugged in or pulled out while Lua runs. With some hubs it wasn't found before.

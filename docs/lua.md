@@ -27,10 +27,11 @@ function draw()
 end
 ```
 
-On the console, start Lua from the Plugins page. It lists the scripts on
-the card. Press Esc to leave the list and Ctrl+N for a new script, type
-this in, and press Ctrl+R (or 4 on the keypad). Lua asks for a name the
-first time and saves the script in the card's `/LUA` folder.
+On the console, start Lua from Apps on the menu's Home page (on an older
+menu, the Plugins page). It lists the scripts on the card. Press Esc to
+leave the list and Ctrl+N for a new script, type this in, and press Ctrl+R
+(or 4 on the keypad). Lua asks for a name the first time and saves the
+script in the card's `/LUA` folder.
 
 On your computer, in the starter kit, save it as `first.lua` and run:
 

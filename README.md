@@ -2,7 +2,7 @@
 
 Write programs for the ColecoVision in Lua, on the console, and run them. Lua is a small programming language that's easy to learn. A script can draw, move sprites, play sound and read the controllers.
 
-Scripts are `.lua` files in the `/LUA` folder of the card. Open one from the cart's menu, or start Lua by itself to see the list and make a new one. You need a USB keyboard to type. Without one you can still open scripts and run them.
+Scripts are `.lua` files in the `/LUA` folder of the card. Open one from the cart's menu, or start Lua from Apps on the menu's Home page to see the list and make a new one. You need a USB keyboard to type. Without one you can still open scripts and run them.
 
 ## Controls
 
