@@ -20,6 +20,6 @@ set(CMAKE_CXX_COMPILER_LAUNCHER ${CMAKE_COMMAND} -E env SOURCE_DATE_EPOCH=${BUIL
 add_executable(lua)
 cvcart_features(lua PSRAM CARD PADS KEYBOARD MOUSE MIDI_IN)
 parrotcart_lua(lua)
-cvcart_plugin(lua ID parrotcart.lua NAME "Lua" VERSION 0.1.4 BY "Parrot Cart"
+cvcart_plugin(lua ID parrotcart.lua NAME "Lua" VERSION 0.1.5 BY "Parrot Cart"
               HOME /LUA OPENS .lua USES standalone ICON lua/icon.txt FILE_ICON lua/file_icon.txt
               README CART-README.md FILE LUA.CVP)
